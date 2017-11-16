@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberGradeMapper">
+	<resultMap id="BaseResultMap" type="top.rreeff.topUpQuery.pojo.MemberGrade">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="grade" property="grade" jdbcType="BIGINT" />
+		<result column="money" property="money" jdbcType="BIGINT" />
+	</resultMap>
+	<!-- 查询会员等级分页列表 -->
+	<select id="queryMemberGradeByPage" parameterType="top.rreeff.topUpQuery.pojo.link.MemberGradeParam"
+		resultMap="BaseResultMap">
+			select * from t_member_grade
+			<if test="id!=null and id!=''">
+				where id = #{id}
+			</if>
+			order by grade
+	</select>
+	<!-- 添加会员等级 -->
+	<insert id="addMemberGrade" parameterType="top.rreeff.topUpQuery.pojo.link.MemberGradeParam">
+		insert into t_member_grade(id,name,grade,money)
+		values(#{id},#{name},#{grade},#{money})
+	</insert>
+	<!-- 删除会员等级 -->
+	<delete id="deleteMemberGrade" parameterType="top.rreeff.topUpQuery.pojo.link.MemberGradeParam">
+		delete from t_member_grade where id = #{id}
+	</delete>
+	<!-- 编辑会员等级 -->
+	<update id="updateMemberGrade" parameterType="top.rreeff.topUpQuery.pojo.link.MemberGradeParam">
+		update t_member_grade
+		<set>
+			name = #{name},
+			grade = #{grade},
+			money = #{money},
+		</set>
+		where id = #{id}
+	</update>
+</mapper>

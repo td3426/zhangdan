@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TopupRecordMapper">
+	<resultMap id="BaseResultMap" type="top.rreeff.topUpQuery.pojo.TopupRecord">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="date" property="date" jdbcType="BIGINT" />
+		<result column="channel" property="channel" jdbcType="VARCHAR" />
+		<result column="stage" property="stage" jdbcType="VARCHAR" />
+		<result column="money" property="money" jdbcType="BIGINT" />
+	</resultMap>
+	<!-- 查询会员等级分页列表 -->
+	<select id="queryTopUpRecordByPage" parameterType="top.rreeff.topUpQuery.pojo.link.TopupRecordParam"
+		resultMap="BaseResultMap">
+			select * from t_topup_record
+			<if test="date!=null and date!=''">
+				where date = #{date}
+			</if>
+			<if test="channel!=null and channel!=''">
+				where channel = #{channel}
+			</if>
+			<if test="stage!=null and stage!=''">
+				where stage = #{stage}
+			</if>
+			order by date desc
+	</select>
+</mapper>

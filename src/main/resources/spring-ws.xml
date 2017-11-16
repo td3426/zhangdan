@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:jaxws="http://cxf.apache.org/jaxws"
+	   xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+                       http://www.springframework.org/schema/beans/spring-beans.xsd
+                       http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd
+                    http://cxf.apache.org/jaxrs
+					http://cxf.apache.org/schemas/jaxrs.xsd">
+
+	<import resource="classpath*:META-INF/cxf/cxf.xml" />
+	<import resource="classpath*:META-INF/cxf/cxf-extension-soap.xml" />
+	<import resource="classpath*:META-INF/cxf/cxf-servlet.xml" />
+
+	<bean id="outLoggingInterceptor" class="org.apache.cxf.interceptor.LoggingOutInterceptor"/>
+
+	<!-- restful -->
+	<bean id="jsonProvider" class="com.alibaba.fastjson.support.jaxrs.FastJsonProvider"/>
+	<bean id="encodingLoggingInInterceptor" class="top.rreeff.util.other.EncodingLoggingInInterceptor"></bean>
+
+<!-- 	<bean id = "appService" class = "top.rreeff.client.service.impl.AppServiceImpl"></bean>
+ -->	<jaxrs:server id="logisticsApiServiceContainer" address="/ws">
+
+		<jaxrs:serviceBeans>
+			<ref bean="appService" />
+		</jaxrs:serviceBeans>
+		<!--<jaxrs:inInterceptors>-->
+			<!--<ref bean="encodingLoggingInInterceptor"/>-->
+		<!--</jaxrs:inInterceptors>-->
+		<jaxrs:providers>
+			<ref bean="jsonProvider"/>
+		</jaxrs:providers>
+
+		<jaxrs:extensionMappings>
+			<entry key="json" value="application/json" />
+			<entry key="xml" value="application/xml" />
+		</jaxrs:extensionMappings>
+
+		<!--<jaxrs:outInterceptors>-->
+			<!--<ref bean="outLoggingInterceptor"/>-->
+		<!--</jaxrs:outInterceptors>-->
+
+		<!--<jaxrs:languageMappings>-->
+			<!--<entry key="en" value="en-gb"/>-->
+		<!--</jaxrs:languageMappings>-->
+	</jaxrs:server>
+
+</beans>
